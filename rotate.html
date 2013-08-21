@@ -1,0 +1,87 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>大转盘</title>
+	<style>
+	body { margin:0px; padding:0px;}
+    .rotate {
+		position:relative;
+		width:320px;
+		margin: 0px auto;
+	}
+	.rotate-bg 
+	{
+	    position:absolute;
+		width:320px;
+		height:320px;
+		background:url(images/rotate/rotate-bg.png);
+		-webkit-background-size:320px 320px;
+		background-size:320px 320px;
+	}
+	.rotate .btn-lottery {
+		width:180px;
+		height:180px;
+		position:absolute;
+		top:69px;
+		left:70px;
+		background:url(images/rotate/btn.png);
+		-webkit-background-size:180px 180px;
+		background-size:180px 180px;
+		cursor: pointer;
+	}
+	</style>
+</head>
+<body>
+<div class="rotate">
+	<div class="rotate-bg"></div>
+	<div class="btn-lottery"></div>
+</div>
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="scripts/jqueryrotate.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var rotateStart = function (awards, angle, text) {  //awards:奖项，angle:奖项对应的角度
+            $('.btn-lottery').stopRotate();
+            $(".btn-lottery").rotate({
+                angle: 0,
+                duration: 5000,
+                animateTo: angle + 1440, //angle是图片上各奖项对应的角度，1440是我要让指针旋转4圈。所以最后的结束的角度就是这样子^^
+                callback: function () {
+                    alert(text)
+                }
+            });
+        };
+
+        $(".btn-lottery").rotate({
+            bind: {
+                click: function () {
+                    var time = [1];
+                    time = time[Math.floor(Math.random() * time.length)];
+                    if (time == 1) {
+                        var data = [1, 2, 3, 0]; //返回的数组
+                        data = data[Math.floor(Math.random() * data.length)];
+                        if (data == 1) {
+                            rotateStart(1, 157, '恭喜您抽中的一等奖')
+                        }
+                        if (data == 2) {
+                            rotateStart(2, 247, '恭喜您抽中的二等奖')
+                        }
+                        if (data == 3) {
+                            rotateStart(3, 22, '恭喜您抽中的三等奖')
+                        }
+                        if (data == 0) {
+                            var angle = [67, 112, 202, 292, 337];
+                            angle = angle[Math.floor(Math.random() * angle.length)]
+                            rotateStart(0, angle, '很遗憾，这次您未抽中奖')
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

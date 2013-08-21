@@ -1,0 +1,57 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>刮刮卡</title>
+	<style>
+		body { margin:0px; padding:0px;}
+	    .cover { width: 320px; max-width: 480px; margin: 0 auto; position: relative; }
+	    .cover img { width: 320px; }
+	    .scratch, .prize { position: absolute; width: 150px; height: 40px; top: 110px; right: 50px; text-align: center; font-weight: bold; font-size: 20px; line-height: 40px; }
+	</style>
+</head>
+<body>
+	<div class="cover">
+	    <img src="images/scratch/scratch_bg.jpg" />
+	    <div class="prize">三等奖</div>
+	    <div class="scratch"></div>
+	    <button class="btn-prize">领取</button>
+	</div>
+
+	<script src="http://code.jquery.com/jquery.js"></script>
+	<script src="scripts/wScratchPad.js"></script>
+	<script type="text/javascript">
+	    var isScratch = false; // 未刮奖
+
+	    $(function () {
+	        $(".scratch").wScratchPad({
+	            width: 150,
+	            height: 40,
+	            color: "#a9a9a7",
+	            realtimePercent: true,
+	            scratchUp: function (e, percent) {
+	                if (percent > 10) {
+	                    isScratch = true; // 已刮奖
+	                }
+	            }
+	        });
+
+	        $(".btn-prize").click(function () {
+	            var isWin = true;
+	            if (!isScratch) {
+	                alert('请将刮奖区域刮开');
+	                return;
+	            }
+	            if (isWin) {
+	                // 已中奖
+	                alert('您中奖了');
+	            }
+	            else {
+	                alert('您本次没有中奖');
+	            }
+	        });
+	    });
+	</script>
+</body>
+</html>
